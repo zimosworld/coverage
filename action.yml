@@ -1,6 +1,6 @@
-name: 'Python Coverage'
+name: 'Code Coverage'
 description: 'Publish coverage report to a PR & enforce coverage on new & modified files'
-author: 'orgoro'
+author: 'zimosworld'
 inputs:
   coverageFile:
     required: true
@@ -23,6 +23,22 @@ inputs:
   sourceDir:
     required: false
     description: the directory to use as the source of the coverage report
+  passIcon:
+    required: false
+    description: the indicator for files that passed
+    default: '🟢'
+  failIcon:
+    required: false
+    description: the indicator for files that failed
+    default: '🔴'
+  commentTitle:
+    required: false
+    description: the title of the comment added to the PR
+    default: 'Pull Request Code Coverage'
+  shouldCountRenamedAsModified:
+    required: false
+    description: switch to count renamed files as modified
+    default: 'true'
 runs:
   using: 'node20'
   main: 'dist/index.js'

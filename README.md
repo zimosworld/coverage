@@ -26,7 +26,7 @@ jobs:
           - name: Run tests
             run: npm run test -- --coverage --coverageReporters="text" --coverageReporters="cobertura"
           - name: Coverage Report for Changed Files
-            uses: zimosworld/coverage@v1.0
+            uses: zimosworld/coverage@v1.1
             with:
               coverageFile: ./coverage/cobertura-coverage.xml
               token: ${{ secrets.GITHUB_TOKEN }}
