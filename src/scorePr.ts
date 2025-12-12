@@ -5,18 +5,18 @@ import {formatAverageTable, formatFilesTable, toPercent} from './format'
 import {context} from '@actions/github'
 import {octokit} from './client'
 
-const TITLE = `# ☂️ Python Coverage`
-
 export async function publishMessage(pr: number, message: string): Promise<void> {
-  const body = TITLE.concat(message)
+  const title = `# ${core.getInput('commentTitle', {required: false}) || 'Pull Request Code Coverage'}`
+
+  const body = title.concat(message)
   core.summary.addRaw(body).write()
 
   const comments = await octokit.rest.issues.listComments({
     ...context.repo,
     issue_number: pr
   })
-  const exist = comments.data.find(commnet => {
-    return commnet.body?.startsWith(TITLE)
+  const exist = comments.data.find(comment => {
+    return comment.body?.startsWith(title)
   })
 
   if (exist) {

@@ -1,5 +1,6 @@
 import {context} from '@actions/github'
 import {octokit} from './client'
+import * as core from '@actions/core'
 
 export type CommitsComparison = {
   newFiles: string[]
@@ -14,9 +15,12 @@ export async function compareCommits(base: string, head: string): Promise<Commit
   const newFiles: string[] = []
   const modifiedFiles: string[] = []
 
+  const shouldCountRenamedAsModified = core.getBooleanInput('shouldCountRenamedAsModified', {required: false}) || true
+
   for (const file of files) {
     if (file.status === 'added') newFiles.push(file.filename)
     if (file.status === 'modified') modifiedFiles.push(file.filename)
+    if (shouldCountRenamedAsModified && file.status === 'renamed') modifiedFiles.push(file.filename)
   }
   return {newFiles, modifiedFiles}
 }
