@@ -496,9 +496,8 @@ function scorePr(filesCover) {
         core.info('No covered modified files in this PR ');
     }
     const sha = (_c = github_1.context.payload.pull_request) === null || _c === void 0 ? void 0 : _c.head.sha.slice(0, 7);
-    const action = '[action](https://github.com/marketplace/actions/python-coverage)';
-    message = message.concat(`\n\n\n> **updated for commit: \`${sha}\` by ${action}🐍**`);
-    message = `\n> current status: ${passOverall ? '✅' : '❌'}`.concat(message);
+    message = message.concat(`\n\n\n> **Updated for commit: \`${sha}\`**`);
+    message = `\n### Current status: ${passOverall ? '✅' : '❌'}`.concat(message);
     publishMessage(github_1.context.issue.number, message);
     core.endGroup();
     return passOverall;
